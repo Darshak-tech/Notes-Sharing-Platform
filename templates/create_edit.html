@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow-lg border-0 rounded-pilled">
+            <div class="card-header bg-white pb-0">
+                <h3 class="mb-2 mt-2">{{ title }}</h3>
+            </div>
+            <div class="card-body">
+                <form method="POST">
+                    <div class="mb-3">
+                        <label for="title" class="form-label fw-bold">Note Title</label>
+                        <input type="text" class="form-control" id="title" name="title" required value="{{ note.title if note else '' }}" placeholder="Enter an engaging title...">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="content" class="form-label fw-bold d-flex justify-content-between">
+                            <span>Markdown Content</span>
+                            <small class="text-muted font-weight-normal">Supports markdown formatting</small>
+                        </label>
+                        <textarea class="form-control font-monospace" id="content" name="content" rows="12" required placeholder="# Header&#10;Write your markdown content here...">{{ note.content if note else '' }}</textarea>
+                    </div>
+                    
+                    <div class="mb-4 form-check form-switch">
+                        <input class="form-check-input" type="checkbox" role="switch" id="is_public" name="is_public" {% if note and note.is_public %}checked{% endif %}>
+                        <label class="form-check-label" for="is_public">Make note public (Visible to everyone)</label>
+                    </div>
+                    
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <a href="{{ url_for('notes.dashboard') }}" class="btn btn-outline-secondary me-md-2">Cancel</a>
+                        <button type="submit" class="btn btn-primary px-4">{{ action }}</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
